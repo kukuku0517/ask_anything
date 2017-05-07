@@ -1,0 +1,36 @@
+<!--<form action="/edit_update/<%=@post.id%>" method="post">-->
+  
+<!--  <div class="form-group">-->
+<!--    <label for="title">제목</label>-->
+<!--    <input name="title" type="text" class="form-control" id="title" placeholder="이메일을 입력하세요">-->
+<!--  </div>-->
+  
+<!--  <div class="form-group">-->
+<!--    <label for="content">내용</label>-->
+<!--    <input name="content" type="text" class="form-control" id="content" placeholder="이메일을 입력하세요">-->
+<!--  </div>-->
+  
+<!--  <div class="form-group">-->
+<!--    <label for="hashtags">태그</label>-->
+<!--    <input name="hashtags" type="text" class="form-control" id="hashtags" placeholder="이메일을 입력하세요">-->
+<!--  </div>-->
+
+<!--  <button type="submit" class="btn btn-default">제출</button>-->
+<!--</form>-->
+
+<%=form_tag edit_update_path(@post.id),method: :post do%>
+<div class="form-group">
+    <%= label_tag 'title',"제목"%>
+    <%= text_field_tag 'title',@post.title,class: "form-control",placeholder: "제목을 입력하세요", required: true %>
+</div>
+<div class="form-group">
+    <%= label_tag 'content',"내용"%>
+    <%= text_field_tag 'content',@post.content,class: "form-control",placeholder: "내용을 입력하세요", required: true %>
+</div>
+<div class="form-group">
+    <%= label_tag 'hashtags',"제목"%>
+    <%= text_field_tag 'hashtags',@hashtags,class: "form-control",placeholder: "태그을 입력하세요" %>
+</div>
+<%= button_tag '제출',type: "submit",class:"btn btn-default"%>
+
+<%end%>

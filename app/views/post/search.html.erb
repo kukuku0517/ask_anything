@@ -1,0 +1,65 @@
+<div class="header">
+    <div class="jumbotron">
+         <h1><%=link_to "Ask anything",root_path,method: :get %></h1>
+        <div class="menu">
+            <% if !user_signed_in? %>
+               <%=button_to 'login', new_user_session_path, method: :get, class: "btn btn-default menu-item" %>
+             <%else%>
+                <%=link_to 'log_out',destroy_user_session_path,method: :delete, class: "btn btn-default menu-item" %>
+                <%=link_to 'my_page',edit_user_registration_path,method: :get, class: "btn btn-default menu-item"%>
+                <%= link_to 'write', write_path, method: :get, class: "btn btn-default menu-item"%>
+            <% end %>
+        </div>
+        <div>
+            <% @hashtags.each do |hash|%>
+                <span>#<%=hash.name%> </span>
+            <%end%>
+        </div>
+ 
+    </div>
+    <!--<div class="container">-->
+    <!--    <form action="/search/0" class="form-group search-bar">-->
+    <!--        <input type="text" name="text" class="form-control"></input>-->
+    <!--        <input type="submit" value="검색" class="form-control"></input>-->
+    <!--    </form>-->
+    <!--</div>-->
+   
+   <div class="container">
+        <%= form_tag (search_path(0)), class: "form-group search-bar",method: :get do%>
+        <%= text_field_tag :text, '', class: "form-control", placeholder: "입력하세요"%>
+        <%= submit_tag '검색'%>
+        <%end%>
+   </div>
+        
+</div>
+
+<% if @posts!=nil%>
+    <div class="container">
+        <%@posts.each do |d|%>
+        <%= d%>
+        <%end%>
+    <% @posts.each do |post| %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title"><%= post.title%></div>
+            </div>
+           
+            <%= link_to content_path(post.id) do %>
+              <div class="panel-body"><%= truncate(post.content, length:10)%></div>
+                <div class="panel-body panel-3">
+                    <div><%= post.visit%></div>
+                    <div><%= post.created_at%></div>
+                    <div><%= post.user.name%></div>
+                </div>
+            <%end%>
+            <div class="panel-body">
+                <%post.hashtags.each do |hashtag| %>
+                    <span><%= link_to "#"+hashtag.name,search_path(hashtag.id),method: :get%></span>
+                <%end%>
+            </div>
+        </div>
+        <%end%>
+    </div>
+<%else%>
+    <div>no such data</div>
+<%end%>
